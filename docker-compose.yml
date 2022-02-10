@@ -1,0 +1,31 @@
+version: '3'
+services:
+  nginx-loadbalance:
+    image: 'nginx:1.18.0'
+    container_name: 'nginx-lb'
+    ports:
+      - '8181:8181'
+    volumes:
+      - ./server-lb/site-content:/usr/share/nginx/html
+      - ./server-lb/config:/etc/nginx/conf.d
+    restart: unless-stopped
+
+  nginx-a:
+    image: 'nginx:1.18.0'
+    container_name: 'nginx-a'
+    ports:
+      - '8281:8281'
+    volumes:
+      - ./server-a/site-content:/usr/share/nginx/html
+      - ./server-a/config:/etc/nginx/conf.d
+    restart: unless-stopped
+  
+  nginx-b:
+    image: 'nginx:1.18.0'
+    container_name: 'nginx-b'
+    ports:
+      - '8381:8381'
+    volumes:
+      - ./server-b/site-content:/usr/share/nginx/html
+      - ./server-b/config:/etc/nginx/conf.d
+    restart: unless-stopped
